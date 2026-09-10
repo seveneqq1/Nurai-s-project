@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Добавить компании — BM Database</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface-2: #243044;
+      --border: #334155;
+      --text: #e8edf4;
+      --muted: #94a3b8;
+      --accent: #3b82f6;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(ellipse at top, #1e293b 0%, var(--bg) 55%);
+      color: var(--text);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      width: min(480px, 100%);
+    }
+    h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+    p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; line-height: 1.5; }
+    label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.35rem; }
+    input {
+      width: 100%; padding: 0.65rem 0.8rem; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--surface-2);
+      color: var(--text); font-size: 0.95rem; margin-bottom: 1rem;
+    }
+    input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+    button {
+      cursor: pointer; border: none; border-radius: 8px;
+      font-size: 0.95rem; padding: 0.65rem 1rem;
+      background: var(--accent); color: white; width: 100%;
+      transition: opacity 0.15s;
+    }
+    button:hover { opacity: 0.88; }
+    button:disabled { opacity: 0.45; cursor: default; }
+    .status {
+      margin-top: 1rem; padding: 0.75rem; border-radius: 8px;
+      font-size: 0.9rem; display: none;
+    }
+    .status.ok { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); color: #86efac; }
+    .status.err { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); color: #fca5a5; }
+    .company-list {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border); border-radius: 10px;
+      overflow: hidden;
+    }
+    .company-item {
+      padding: 0.6rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+    .company-item:last-child { border-bottom: none; }
+    .company-item strong { display: block; font-size: 0.92rem; margin-bottom: 0.1rem; }
+    .company-item span { color: var(--muted); }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>Добавить компании</h1>
+  <p>Введите мастер-пароль от BM Database. Страница расшифрует базу, добавит компании ниже и сохранит обратно.</p>
+
+  <div class="company-list">
+    <div class="company-item">
+      <strong>ТОО "ЛабМониторинг"</strong>
+      <span>БИН 190440000080 · Kaspi Bank · KZ11722S000002064483</span>
+    </div>
+    <div class="company-item">
+      <strong>ТОО "Biometric ID"</strong>
+      <span>БИН 220840017959 · ForteBank · KZ5296502F0014929442KZT</span>
+    </div>
+    <div class="company-item">
+      <strong>ТОО "Biometric (Биометрик)"</strong>
+      <span>БИН 180740022427 · Kaspi Bank · KZ61722S000001487112</span>
+    </div>
+    <div class="company-item">
+      <strong>ТОО "Biometric solution"</strong>
+      <span>БИН 210240020956 · Kaspi Bank · KZ97722S000007243705</span>
+    </div>
+  </div>
+
+  <label for="password">Мастер-пароль</label>
+  <input type="password" id="password" placeholder="Введите пароль..." />
+  <button id="run-btn">Добавить компании в базу</button>
+  <div class="status" id="status"></div>
+</div>
+
+<script src="js/crypto.js"></script>
+<script>
+const NEW_COMPANIES = [
+  {
+    name: 'ТОО "ЛабМониторинг"',
+    address: "Казахстан, Алматы, проспект Нурсултан Назарбаев, здание 281",
+    binIin: "190440000080",
+    bank: 'АО "KASPI BANK"',
+    bik: "CASPKZKA",
+    kbe: "17",
+    accountNumber: "KZ11722S000002064483",
+  },
+  {
+    name: 'ТОО "Biometric ID"',
+    address: "050000, КАЗАХСТАН, АЛМАТЫ г, БОСТАНДЫКСКИЙ р-н, КОКТЕМ-2 мкр, дом 8, кв 50",
+    binIin: "220840017959",
+    bank: 'АО "ForteBank"',
+    bik: "IRTYKZKA",
+    kbe: "17",
+    accountNumber: "KZ5296502F0014929442KZT",
+  },
+  {
+    name: 'ТОО "Biometric (Биометрик)"',
+    address: "Казахстан, Алматы, Сейфуллина, дом 163 А",
+    binIin: "180740022427",
+    bank: 'АО "KASPI BANK"',
+    bik: "CASPKZKA",
+    kbe: "17",
+    accountNumber: "KZ61722S000001487112",
+  },
+  {
+    name: 'ТОО "Biometric solution"',
+    address: "Казахстан, Алматы, Проспект Райымбек, дом 417А",
+    binIin: "210240020956",
+    bank: 'АО "KASPI BANK"',
+    bik: "CASPKZKA",
+    kbe: "17",
+    accountNumber: "KZ97722S000007243705",
+  },
+];
+
+const STORAGE_KEY = "bm-database-v1";
+
+function uuid() {
+  return crypto.randomUUID();
+}
+
+function setStatus(msg, type) {
+  const el = document.getElementById("status");
+  el.textContent = msg;
+  el.className = "status " + type;
+  el.style.display = "block";
+}
+
+document.getElementById("run-btn").addEventListener("click", async () => {
+  const password = document.getElementById("password").value;
+  if (!password || password.length < 8) {
+    setStatus("Пароль должен быть не менее 8 символов.", "err");
+    return;
+  }
+
+  const btn = document.getElementById("run-btn");
+  btn.disabled = true;
+  btn.textContent = "Обработка...";
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      setStatus("База данных не найдена. Сначала откройте BM Database и создайте базу.", "err");
+      btn.disabled = false;
+      btn.textContent = "Добавить компании в базу";
+      return;
+    }
+
+    const saved = JSON.parse(raw);
+    if (!saved.isSetup || !saved.encryptedPayload) {
+      setStatus("База не инициализирована.", "err");
+      btn.disabled = false;
+      btn.textContent = "Добавить компании в базу";
+      return;
+    }
+
+    // Decrypt
+    const plaintext = await CryptoModule.decrypt(password, saved.encryptedPayload);
+    const data = JSON.parse(plaintext);
+
+    if (!Array.isArray(data.companies)) data.companies = [];
+
+    // Check for duplicates by БИН and add only new ones
+    let added = 0;
+    for (const company of NEW_COMPANIES) {
+      const alreadyExists = data.companies.some(
+        (c) => c.binIin === company.binIin || c.name === company.name
+      );
+      if (!alreadyExists) {
+        data.companies.push({ id: uuid(), ...company });
+        added++;
+      }
+    }
+
+    if (added === 0) {
+      setStatus("Все компании уже есть в базе — ничего не добавлено.", "ok");
+      btn.disabled = false;
+      btn.textContent = "Добавить компании в базу";
+      return;
+    }
+
+    // Re-encrypt and save
+    const newPlaintext = JSON.stringify(data);
+    const encryptedPayload = await CryptoModule.encrypt(password, newPlaintext);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ isSetup: true, encryptedPayload }));
+
+    setStatus(`Готово! Добавлено компаний: ${added}. Вернитесь в BM Database и обновите страницу (F5).`, "ok");
+    btn.textContent = "✓ Выполнено";
+  } catch (err) {
+    setStatus("Ошибка: " + (err.message || "Неверный пароль или повреждённые данные."), "err");
+    btn.disabled = false;
+    btn.textContent = "Добавить компании в базу";
+  }
+});
+</script>
+</body>
+</html>

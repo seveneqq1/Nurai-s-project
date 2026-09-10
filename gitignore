@@ -1,0 +1,5 @@
+# Never commit encrypted data or secrets
+*.enc
+data/
+.DS_Store
+Thumbs.db

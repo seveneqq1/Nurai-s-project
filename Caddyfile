@@ -1,0 +1,17 @@
+# BM Database — Caddy reverse proxy config
+#
+# Replace yourdomain.com with your real domain (must already point at this
+# server's IP via a DNS A record before Caddy can issue an HTTPS cert).
+#
+# Replace the IP addresses in the @blocked matcher below with the IP
+# address(es) that should be allowed to reach the app. Find your current
+# public IP by visiting https://ifconfig.me from the device you'll use to
+# access BM Database. If you access it from more than one location, list
+# every IP (space-separated) or a CIDR range.
+
+yourdomain.com {
+    @blocked not remote_ip 203.0.113.5 198.51.100.20
+    respond @blocked 403
+
+    reverse_proxy 127.0.0.1:8080
+}

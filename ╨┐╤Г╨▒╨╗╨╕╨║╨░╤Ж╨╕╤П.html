@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Как открыть BM Database на другом устройстве</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .page { max-width: 700px; margin: 0 auto; }
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 36px;
+  }
+
+  .method {
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .method-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .badge-green  { background: #14532d; color: #4ade80; }
+  .badge-blue   { background: #1e3a5f; color: #60a5fa; }
+
+  .method-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .method-note {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-top: 2px;
+  }
+
+  .steps { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .num-green { background: #14532d; color: #4ade80; }
+  .num-blue  { background: #1e3a5f; color: #60a5fa; }
+
+  .step-text { font-size: 0.95rem; color: #cbd5e1; line-height: 1.5; }
+  .step-text strong { color: #fff; }
+
+  .highlight-box {
+    background: #111827;
+    border: 1px solid #374151;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+  }
+  .highlight-box .link {
+    color: #facc15;
+    font-weight: 600;
+    font-size: 1rem;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .warning {
+    background: #2d1b00;
+    border: 1px solid #92400e;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: #fbbf24;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #1e2030;
+    margin: 8px 0 20px;
+  }
+
+  code {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-family: "Consolas", monospace;
+    font-size: 0.88em;
+    color: #e6edf3;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Как открыть BM Database на другом устройстве</h1>
+  <p class="subtitle">Два способа — выберите удобный</p>
+
+  <!-- СПОСОБ 1 -->
+  <div class="method">
+    <div class="method-header">
+      <span class="badge badge-green">Способ 1</span>
+      <div>
+        <div class="method-title">Ссылка через интернет</div>
+        <div class="method-note">Работает из любой сети — офис, дом, телефон</div>
+      </div>
+    </div>
+    <hr class="divider">
+    <ul class="steps">
+      <li class="step">
+        <div class="step-num num-green">1</div>
+        <div class="step-text">
+          Дважды кликните <strong>«Запустить BM Database.bat»</strong><br>
+          Нажмите <strong>Да</strong> на запрос прав администратора.<br>
+          Появится чёрное окно — <em>не закрывайте его.</em>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num num-green">2</div>
+        <div class="step-text">
+          Дважды кликните <strong>«Ссылка для другого устройства.bat»</strong><br>
+          При первом запуске скачается cloudflared (~30 МБ).<br>
+          Подождите 15–20 секунд.
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num num-green">3</div>
+        <div class="step-text">
+          В окне появится ссылка:
+          <div class="highlight-box">
+            Ищите строку вида:<br>
+            <span class="link">https://xxxx-xxxx.trycloudflare.com</span>
+          </div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num num-green">4</div>
+        <div class="step-text">
+          Скопируйте эту ссылку и отправьте на второй ноутбук / телефон.<br>
+          Откроется BM Database прямо в браузере.
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num num-green">5</div>
+        <div class="step-text">
+          <strong>Оба окна не закрывать</strong> пока нужен доступ.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- СПОСОБ 2 -->
+  <div class="method">
+    <div class="method-header">
+      <span class="badge badge-blue">Способ 2</span>
+      <div>
+        <div class="method-title">Только через офисный Wi-Fi</div>
+        <div class="method-note">Оба устройства — одна и та же Wi-Fi сеть</div>
+      </div>
+    </div>
+    <hr class="divider">
+    <ul class="steps">
+      <li class="step">
+        <div class="step-num num-blue">1</div>
+        <div class="step-text">
+          Правой кнопкой на <strong>«Запустить BM Database.bat»</strong><br>
+          → <strong>«Запуск от имени администратора»</strong> → Да.<br>
+          Появится чёрное окно с жёлтой ссылкой.
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num num-blue">2</div>
+        <div class="step-text">
+          В окне найдите строку <strong>«Ссылка для других устройств»</strong>:
+          <div class="highlight-box">
+            Ваша ссылка для Wi-Fi:<br>
+            <span class="link">http://192.168.X.X:8080</span>
+          </div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num num-blue">3</div>
+        <div class="step-text">
+          На втором устройстве откройте браузер и введите эту ссылку.<br>
+          <strong>Не пишите localhost</strong> — пишите именно цифры 192.168…
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num num-blue">4</div>
+        <div class="step-text">
+          Чёрное окно сервера <strong>не закрывать</strong> пока нужен доступ.
+        </div>
+      </li>
+    </ul>
+    <div class="warning">
+      ⚠️ Если не открывается — убедитесь что оба устройства подключены к <strong>одной Wi-Fi</strong>
+      (одинаковое имя сети). Гостевая сеть не подойдёт.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

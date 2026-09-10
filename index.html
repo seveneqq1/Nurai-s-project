@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BM Database — Справочник компании</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="auth-screen" class="auth-screen"></div>
+
+  <div id="app" class="app hidden">
+    <header class="top-bar">
+      <h1>BM Database</h1>
+      <div class="top-actions">
+        <button class="btn-secondary" id="export-btn">Экспорт копии</button>
+        <button class="btn-ghost" id="lock-btn">Заблокировать</button>
+      </div>
+    </header>
+    <main id="main-content"></main>
+  </div>
+
+  <script src="js/cryptojs.min.js"></script>
+  <script src="js/crypto.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/google-config.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/google-calendar.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</body>
+</html>
