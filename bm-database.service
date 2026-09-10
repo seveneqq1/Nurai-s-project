@@ -1,0 +1,29 @@
+# BM Database — systemd service
+#
+# Install: sudo cp deploy/bm-database.service /etc/systemd/system/
+#          sudo systemctl daemon-reload
+#          sudo systemctl enable --now bm-database
+#
+# App code lives in /opt/bm-database (safe to overwrite on every update).
+# Persistent data lives in /var/lib/bm-database, completely separate from
+# app code, so redeploying/updating the app never touches bm-data.enc.
+
+[Unit]
+Description=BM Database
+After=network.target
+
+[Service]
+Type=simple
+User=bmapp
+Group=bmapp
+WorkingDirectory=/opt/bm-database
+ExecStart=/usr/bin/pwsh -File /opt/bm-database/server.ps1
+Environment=BM_PORT=8080
+Environment=BM_BIND_HOST=127.0.0.1
+Environment=BM_DATA_DIR=/var/lib/bm-database
+Environment=BM_ALLOWED_ORIGIN=https://yourdomain.com
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
